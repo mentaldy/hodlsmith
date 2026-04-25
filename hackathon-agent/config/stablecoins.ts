@@ -1,0 +1,15 @@
+export const STABLECOIN_SYMBOLS = new Set([
+  "USDC",
+  "USDT",
+  "DAI",
+  "BUSD",
+  "TUSD",
+  "FRAX",
+  "USDD",
+  "GUSD",
+  "PYUSD",
+  "USDE",
+  "FDUSD",
+  "USDP",
+  "LUSD",
+]);

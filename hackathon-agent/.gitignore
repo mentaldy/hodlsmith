@@ -1,0 +1,35 @@
+# Workspace-level ignores layered on top of the repo-root .gitignore.
+# Most patterns live at repo root — these are scaffold-specific safety nets.
+
+# Build / cache
+.next/
+out/
+build/
+.turbo/
+.swc/
+*.tsbuildinfo
+next-env.d.ts
+
+# Deps
+node_modules/
+.pnp/
+.pnp.*
+.yarn/install-state.gz
+
+# Env (defense in depth — root already ignores these)
+.env
+.env.local
+.env.*.local
+
+# AgentKit-generated wallet (private key file — NEVER commit)
+wallet_data.txt
+
+# Vercel
+.vercel/
+
+# Tests
+coverage/
+
+# OS
+.DS_Store
+*.pem

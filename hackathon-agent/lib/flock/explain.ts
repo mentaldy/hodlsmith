@@ -17,18 +17,18 @@ export type BagExplanation = {
 };
 
 const SYSTEM =
-  "You are a direct, friendly on-chain investing consultant. Cite numeric signals verbatim. Never name specific sell prices or timing. Respond with a valid JSON object only.";
+  "You are a direct, friendly on-chain investing consultant talking to a retail crypto holder. Cite the actual numbers (percentages, dollar amounts) verbatim from the data. Never name specific sell prices or timing. Respond with a valid JSON object only.";
 
 const userPrompt = (bags: BagInput[]) =>
   [
-    `For each of these ${bags.length} positions, write a verdict explanation in English.`,
+    `For each of these ${bags.length} positions, write a verdict explanation in plain English.`,
     "",
-    "Signals reference:",
-    "- A: smart money 7d net flow vs total smart-money holdings (negative = exit)",
-    "- B: % of top-100 holders still holding vs 30d ago",
-    "- C: concentration drift × smart-money direction",
-    "- D: holder-count growth × smart-money direction",
-    "Total score range: -6 to +6. >=3 safe, <=-3 cooked, else watch.",
+    "What the data means (use these PLAIN LANGUAGE descriptions in your prose, never the letter codes):",
+    "- smart money 7d net flow (negative = smart wallets exiting, positive = accumulating)",
+    "- % of top-100 holders still holding vs 30d ago (high = sticky/convicted, low = churning)",
+    "- top-10 concentration drift over 7d (rising while smart money exits = retail absorbing)",
+    "- holder count growth over 7d (rising while smart money exits = retail FOMO into a dump)",
+    "- trapped-retail flag fires when smart money is exiting AND top holders are sticky",
     "",
     "Bags:",
     JSON.stringify(bags, null, 2),
@@ -36,9 +36,14 @@ const userPrompt = (bags: BagInput[]) =>
     "Return JSON with this exact shape:",
     `{"explanations":[{"symbol":"...","oneLiner":"...","paragraph":"...","suggestedAction":"...","counterHypothesis":"..."}]}`,
     "",
-    "Rules:",
-    "- oneLiner: under 60 chars, end with the dominant signal in numbers",
-    "- paragraph: 2-3 sentences. Reference signal numbers verbatim.",
+    "Rules — STRICT:",
+    "- NEVER use letter codes (A, B, C, D, E) or 'Signal A/B/C' in any output text.",
+    "- NEVER mention 'score', 'totalScore', or 'verdict' as a literal word in the prose.",
+    "- Use natural language: 'smart money exited 18%', '47% of top holders dropped out', 'concentration rose 12% while smart money distributed', etc.",
+    "- oneLiner: under 80 chars. Lead with the dominant observation in plain English with one number cited.",
+    "  Good: 'Smart money pulled $12M while 89% of top holders stayed — classic exit-liquidity setup.'",
+    "  Bad:  'Negative A, strong B; score -3.'",
+    "- paragraph: 2–3 sentences in plain English. Cite numbers, not signal letters.",
     "- suggestedAction: ONE sentence. Never name a price or date.",
     "- counterHypothesis: REQUIRED if verdict is 'cooked'. One sentence, plausible bullish counter-read.",
     "- For 'safe' or 'watch', omit counterHypothesis or leave it empty.",

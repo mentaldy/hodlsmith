@@ -1,5 +1,5 @@
 import { Bot } from "grammy";
-import { onStart, onHelp, onWatch, onRefresh, onText, onCallback } from "./handlers";
+import { onStart, onHelp, onCriteria, onWatch, onRefresh, onText, onCallback } from "./handlers";
 
 let bot: Bot | null = null;
 
@@ -10,6 +10,7 @@ function getBot(): Bot {
   const b = new Bot(token);
   b.command("start", onStart);
   b.command("help", onHelp);
+  b.command("criteria", onCriteria);
   b.command("watch", onWatch);
   b.command("refresh", onRefresh);
   b.on("callback_query:data", onCallback);

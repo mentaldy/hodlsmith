@@ -10,6 +10,7 @@ import {
   buildBagKeyboard,
   WELCOME_TEXT,
   HELP_TEXT,
+  CRITERIA_TEXT,
   MSG,
 } from "./formatters";
 import { parseQuery } from "./parse";
@@ -23,6 +24,10 @@ export async function onStart(ctx: Context) {
 
 export async function onHelp(ctx: Context) {
   await ctx.reply(HELP_TEXT, { parse_mode: "Markdown" });
+}
+
+export async function onCriteria(ctx: Context) {
+  await ctx.reply(CRITERIA_TEXT, { parse_mode: "Markdown" });
 }
 
 export async function onWatch(ctx: Context) {

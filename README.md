@@ -4,13 +4,25 @@
 
 An AI agent that takes a wallet address and tells you, per position, whether smart money is still in your bags or quietly walking out — over a 7-to-30 day window.
 
-You hand it a wallet. The agent reasons through three different lenses (Profiler, Smart Money, Token God Mode) on every bag, scores five quantitative signals deterministically, and narrates the verdict in plain English via Flock.io's LLM.
+**Surface-agnostic.** The agent is `runBagCheck()` — a pure function. Telegram is the live distribution today. Slack, MCP, web widgets, autonomous agents — anything that speaks TypeScript imports and runs.
 
 **It does not relieve fear. It calibrates it** — converting vague *"something feels off"* anxiety into a citeable signal you can act on.
 
 ---
 
-## 🚀 Quick start (5 minutes)
+## ⚡ Get started in 3 lines
+
+```ts
+import { runBagCheck } from "@/lib/bagcheck";
+const result = await runBagCheck("0x...wallet", { chain: "base" });
+console.log(result.bags.map(b => `${b.holding.tokenSymbol}: ${b.scored.verdict}`));
+```
+
+Returns a structured per-bag verdict (`safe` / `watch` / `cooked`) with five on-chain signals, the LLM's plain-English explanation, a suggested action, and a counter-hypothesis on every cooked bag. See [`hackathon-agent/examples/import-as-library.ts`](hackathon-agent/examples/import-as-library.ts) for a full runnable demo.
+
+---
+
+## 🚀 Full setup (5 minutes)
 
 ### 1. Prerequisites
 
